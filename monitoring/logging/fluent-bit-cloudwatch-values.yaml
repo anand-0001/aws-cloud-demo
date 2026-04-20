@@ -1,0 +1,36 @@
+serviceAccount:
+  create: true
+  name: aws-for-fluent-bit
+
+cloudWatch:
+  enabled: true
+  region: us-east-1
+  logGroupName: /eks/node-app/application
+  logStreamPrefix: fluent-bit-
+  autoCreateGroup: true
+
+firehose:
+  enabled: false
+
+kinesis:
+  enabled: false
+
+elasticsearch:
+  enabled: false
+
+input:
+  tail:
+    enabled: true
+    path: /var/log/containers/*.log
+    refreshInterval: 5
+    memBufLimit: 10MB
+    skipLongLines: On
+
+filters:
+  kubernetes:
+    enabled: true
+
+output:
+  cloudwatch:
+    enabled: true
+    match: "*"

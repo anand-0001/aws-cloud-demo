@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: service-b
+  namespace: argocd
+spec:
+  project: node-platform
+  source:
+    repoURL: https://github.com/your-org/service-b-repo.git
+    targetRevision: main
+    path: helm/service-b
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: node-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

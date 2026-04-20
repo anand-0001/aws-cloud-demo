@@ -1,0 +1,14 @@
+datadog:
+  site: datadoghq.com
+  apiKeyExistingSecret: datadog-secret
+  logs:
+    enabled: true
+    containerCollectAll: true
+  apm:
+    portEnabled: false
+  processAgent:
+    enabled: false
+
+agents:
+  containerLogs:
+    enabled: true

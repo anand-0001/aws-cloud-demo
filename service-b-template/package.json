@@ -1,0 +1,14 @@
+{
+  "name": "service-b-template",
+  "version": "1.0.0",
+  "description": "Service B template for microservice communication on EKS",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

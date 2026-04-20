@@ -1,0 +1,5 @@
+aws_region    = "us-east-1"
+project_name  = "node-app"
+environment   = "dev"
+github_owner  = "your-github-owner"
+github_repo   = "your-repo-name"

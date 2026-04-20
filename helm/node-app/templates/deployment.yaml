@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "node-app.fullname" . }}
+  labels:
+    app: {{ include "node-app.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "node-app.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "node-app.name" . }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "{{ .Values.app.port }}"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: node-app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: SERVICE_B_URL
+              value: "{{ .Values.app.serviceBUrl }}"
+          ports:
+            - containerPort: {{ .Values.app.port }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.app.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.app.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+              ephemeral-storage: {{ .Values.resources.requests.ephemeralStorage }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+              ephemeral-storage: {{ .Values.resources.limits.ephemeralStorage }}

@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: node-platform
+  namespace: argocd
+spec:
+  description: Project boundaries for node app platform
+  sourceRepos:
+    - https://github.com/your-org/your-repo.git
+    - https://github.com/your-org/service-b-repo.git
+  destinations:
+    - namespace: node-app
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

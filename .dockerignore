@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+.git
+.github
+helm
+k8s
+README.md

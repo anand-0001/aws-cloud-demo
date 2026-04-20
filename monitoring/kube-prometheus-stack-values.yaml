@@ -1,0 +1,6 @@
+grafana:
+  adminPassword: admin123
+
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false

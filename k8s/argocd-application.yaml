@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: node-app
+  namespace: argocd
+spec:
+  project: node-platform
+  source:
+    repoURL: https://github.com/your-org/your-repo.git
+    targetRevision: main
+    path: helm/node-app
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: node-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
