@@ -61,6 +61,14 @@ app.get("/healthz", (req, res) => {
   res.status(200).send("ok");
 });
 
+app.get("/info", (req, res) => {
+  res.status(200).json({
+    service: "node-app",
+    environment: process.env.NODE_ENV || "development",
+    uptime_seconds: Number(process.uptime().toFixed(0))
+  });
+});
+
 app.get("/call-service-b", async (req, res) => {
   if (!serviceBUrl) {
     return res.status(500).json({
